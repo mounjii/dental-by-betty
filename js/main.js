@@ -294,6 +294,7 @@ document.querySelectorAll(".reel").forEach((reel) => {
   const button = reel.querySelector(".reel-play");
   if (!video || !button) return;
 
+  reel.classList.add("has-video");
   video.addEventListener("loadeddata", () => reel.classList.add("has-video"));
 
   video.addEventListener("play", () => setReelState(reel, video, button, true));
@@ -310,7 +311,10 @@ document.querySelectorAll(".reel").forEach((reel) => {
     if (video.paused) {
       video.muted = false;
       video.volume = 1;
-      video.play();
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {});
+      }
     } else {
       video.pause();
     }
@@ -320,7 +324,7 @@ document.querySelectorAll(".reel").forEach((reel) => {
     event.stopPropagation();
     togglePlay();
   });
-  video.addEventListener("click", togglePlay);
+  reel.addEventListener("click", togglePlay);
 });
 
 const bookingForm = document.querySelector(".booking-form");

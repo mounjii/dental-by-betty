@@ -749,11 +749,28 @@ h3 {
   background: #efe8db;
 }
 
+.reel-cover,
 .reel video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.reel-cover {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.reel video {
+  z-index: 0;
+  background: #1c1915;
+}
+
+.reel.is-playing .reel-cover {
+  opacity: 0;
 }
 
 .reel-play {
@@ -1659,6 +1676,9 @@ h3 {
 
   .reel {
     flex: 0 0 min(230px, 72vw);
+    width: min(230px, 72vw);
+    height: auto;
+    aspect-ratio: 9 / 16;
     scroll-snap-align: start;
   }
 
