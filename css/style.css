@@ -1314,14 +1314,42 @@ h3 {
 }
 
 @media (max-width: 900px) {
+  html {
+    scroll-padding-top: 56px;
+  }
+
   .navbar {
-    padding: 12px 20px;
+    padding: 4px 14px;
+    min-height: 50px;
+  }
+
+  .brand-logo {
+    width: 138px;
+    height: 42px;
+  }
+
+  .site-header.is-scrolled .navbar {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    min-height: 46px;
+  }
+
+  .site-header.is-scrolled .brand-logo {
+    width: 128px;
+    height: 38px;
+  }
+
+  .nav-toggle {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    gap: 4px;
   }
 
   .nav-links {
     display: none;
     position: fixed;
-    top: 68px;
+    top: 50px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -1341,7 +1369,7 @@ h3 {
   }
 
   .site-header.is-scrolled .nav-links {
-    top: 58px;
+    top: 46px;
   }
 
   body.is-menu-open {
@@ -1355,10 +1383,6 @@ h3 {
   .nav-mobile-cta {
     display: block;
     padding-top: 8px;
-  }
-
-  .nav-toggle {
-    display: flex;
   }
 
   .hero {
@@ -1625,14 +1649,35 @@ h3 {
 }
 
 @media (max-width: 640px) {
+  html {
+    scroll-padding-top: 52px;
+  }
+
+  .navbar {
+    padding: 3px 12px;
+    min-height: 48px;
+  }
+
   .brand-logo {
-    width: 148px;
-    height: 46px;
+    width: 128px;
+    height: 40px;
+  }
+
+  .site-header.is-scrolled .navbar {
+    min-height: 44px;
   }
 
   .site-header.is-scrolled .brand-logo {
-    width: 136px;
-    height: 42px;
+    width: 120px;
+    height: 36px;
+  }
+
+  .nav-links {
+    top: 48px;
+  }
+
+  .site-header.is-scrolled .nav-links {
+    top: 44px;
   }
 
   .hero-inner {
