@@ -110,6 +110,13 @@
     <script>
       (function () {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const hash = (location.hash || "").replace("#", "");
+        const otherPart = hash && hash !== "accueil" && hash !== "top";
+        try {
+          if (otherPart || sessionStorage.getItem("dental-intro")) return;
+        } catch (e) {
+          if (otherPart) return;
+        }
         document.documentElement.classList.add("is-intro");
       })();
     </script>
@@ -595,6 +602,6 @@
         />
       </svg>
     </a>
-    <script src="js/main.js?v=10"></script>
+    <script src="js/main.js?v=11"></script>
   </body>
 </html>

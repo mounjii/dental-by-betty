@@ -45,32 +45,52 @@ const startReveals = () => {
   revealTargets.forEach((el) => revealObserver.observe(el));
 };
 
-const goToSection = (id) => {
+const goToSection = (id, instant = false) => {
   const section = document.getElementById(id);
   if (!section) return false;
   section.classList.add("is-in");
   section.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in"));
-  section.scrollIntoView({ behavior: "smooth", block: "start" });
+  section.scrollIntoView({ behavior: instant ? "auto" : "smooth", block: "start" });
   return true;
 };
 
-const openHash = () => {
+const openHash = (instant = false) => {
   const id = decodeURIComponent(location.hash.replace("#", ""));
-  if (id) goToSection(id);
+  if (id) goToSection(id, instant);
+};
+
+const shouldSkipIntro = () => {
+  const hash = decodeURIComponent(location.hash.replace("#", ""));
+  const otherPart = Boolean(hash && hash !== "accueil" && hash !== "top");
+  let seen = false;
+  try {
+    seen = Boolean(sessionStorage.getItem("dental-intro"));
+  } catch (e) {}
+  return (
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches || otherPart || seen
+  );
+};
+
+const skipIntro = (intro) => {
+  document.documentElement.classList.remove("is-intro", "is-intro-docking");
+  intro?.remove();
+  startReveals();
+  openHash(true);
 };
 
 const playIntro = () => {
   const intro = document.getElementById("intro");
   const logo = intro?.querySelector(".intro-logo");
   const target = document.querySelector(".brand-logo");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!intro || !logo || !target || reduce) {
-    document.documentElement.classList.remove("is-intro");
-    startReveals();
-    openHash();
+  if (!intro || !logo || !target || shouldSkipIntro()) {
+    skipIntro(intro);
     return;
   }
+
+  try {
+    sessionStorage.setItem("dental-intro", "1");
+  } catch (e) {}
 
   let finished = false;
   const finish = () => {
